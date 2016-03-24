@@ -1,0 +1,17 @@
+<div class="row col-md-12">
+    <h1 class="text-center">Scores Table!</h1>
+
+    <div class="row col-md-12 scores">
+        <div class="alert alert-info text-center" [hidden]="scores.length > 0">
+            <h3>Waiting for scores!</h3>
+        </div>
+
+        <div *ngFor="#score of scores" class="col-md-12 col-sm-12 col-xs-12 score">
+            <span>{{score.user}}</span> |
+            <span>{{score.points}}</span> |
+            <span>{{score.flagsCounter}}</span> |
+            <span>{{score.flagsFirstOwnerCounter}}</span> |
+            <span>{{score.lastFlagTimestamp}}</span>
+        </div>
+    </div>
+</div>

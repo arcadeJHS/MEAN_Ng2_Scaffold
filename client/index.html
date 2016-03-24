@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <title>Scores Table</title>
+    <base href="/" />
+
+    <link rel="stylesheet" href="libs/bootstrap/less/bootstrap.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <script src="libs/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="libs/systemjs/dist/system.src.js"></script>
+    <script src="libs/rxjs/bundles/Rx.js"></script>
+    <script src="libs/angular2/bundles/angular2.js"></script>
+    <script src="libs/angular2/bundles/http.js"></script>
+
+    <script>
+        System.config({
+            packages: {        
+                app: {
+                    format: 'register',
+                    defaultExtension: 'js'
+                }
+            }
+        });
+      
+        System.import('app/bootstrap').then(null, console.error.bind(console));
+    </script>
+</head>
+
+<body>
+    <scores-table>
+        <h2 class="text-center">Loading...</h2>
+    </scores-table>
+</body>
+
+</html>
