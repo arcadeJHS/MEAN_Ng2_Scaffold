@@ -1,5 +1,5 @@
 module.exports = {
     db: {
-        connectionString: 'mongodb://user:password@host:port/databaseName'
+        connectionString: 'mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/'
     }
 };

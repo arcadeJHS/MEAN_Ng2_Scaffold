@@ -15,9 +15,10 @@ gulp.task('clean', function() {
 
 // SERVER
 gulp.task('build:server', function() {
-    var copyServer = gulp.src('server/server.js').pipe(gulp.dest('dist'))
-    var copyBackend = gulp.src('server/backend/**/*').pipe(gulp.dest('dist/backend'));
-    return [copyBackend, copyServer];
+    var copyAppJs = gulp.src('server/app.js').pipe(gulp.dest('dist'))
+    var copyServerFolder = gulp.src('server/backend/**/*').pipe(gulp.dest('dist/server'));
+    var copyPackageJson = gulp.src('package.json').pipe(gulp.dest('dist'));
+    return [copyAppJs, copyServerFolder, copyPackageJson];
 });
 
 // CLIENT
@@ -37,16 +38,16 @@ gulp.task('build:index', function() {
     var mappedPaths = jsNPMDependencies.map(file => { return path.resolve('node_modules', file) })
 
     var copyJsNPMDependencies = gulp.src(mappedPaths, { base: 'node_modules' })
-        .pipe(gulp.dest('dist/webapp/libs'))
+        .pipe(gulp.dest('dist/client/libs'))
 
     var copyIndex = gulp.src('client/index.html')
-        .pipe(gulp.dest('dist/webapp'))
+        .pipe(gulp.dest('dist/client'))
 
     return [copyJsNPMDependencies, copyIndex];
 });
 
 gulp.task('build:copyStatic', function() {
-    gulp.src('client/**/*.{html,css}').pipe(gulp.dest('dist/webapp'));
+    gulp.src('client/**/*.{html,woff,ttf}').pipe(gulp.dest('dist/client'));
 });
 
 gulp.task('build:less', function() {
@@ -54,12 +55,12 @@ gulp.task('build:less', function() {
     var mappedVendorLess = lessNPMDependencies.map(file => { return path.resolve('node_modules', file) });
     var copyLessNPMDependencies = gulp.src(mappedVendorLess, { base: 'node_modules' })
         .pipe(less())
-        .pipe(gulp.dest('dist/webapp/libs'));
+        .pipe(gulp.dest('dist/client/libs'));
 
     //app styles
     var appLess = gulp.src('client/styles/app.less')
         .pipe(less())
-        .pipe(gulp.dest('dist/webapp/styles'));
+        .pipe(gulp.dest('dist/client/styles'));
 
     return [copyLessNPMDependencies, appLess];
 });
@@ -72,11 +73,11 @@ gulp.task('build:app', function() {
 
     return tsResult.js
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist/webapp'));
+        .pipe(gulp.dest('dist/client'));
 });
 
 gulp.task('server', function(cb) {
-    exec('node dist/server.js', function(err, stdout, stderr) {
+    exec('cd dist && node app.js', function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);

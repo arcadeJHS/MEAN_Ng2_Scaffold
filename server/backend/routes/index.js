@@ -4,7 +4,7 @@ var path = require('path'),
 
 /* GET home page. */
 function renderIndex(req, res) {
-    res.sendFile('index.html', {'root': path.resolve(".") + '/dist/webapp'});
+    res.sendFile('index.html', {'root': path.resolve(".") + '/client'});
 };
 router.get('/*', renderIndex);
 

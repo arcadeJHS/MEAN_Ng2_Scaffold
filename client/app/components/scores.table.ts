@@ -19,11 +19,16 @@ export class ScoresTableComponent {
     errorMessage: string;
 
     constructor(private _scoreFactory: ScoreFactory) {
-        this.scores = [];
-
-        this._scoreFactory.getAll().subscribe(
-            (data) => {this.scores = data;},
-            (error) => {this.errorMessage = <any>error;}
-        );
+        this._scoreFactory = _scoreFactory;
+        this.scores = [];        
+         
+        // long polling        
+        (function _p() {
+            this._scoreFactory.getAll().subscribe(
+                (data) => {this.scores = data;},
+                (error) => {this.errorMessage = <any>error;},
+                () => {setTimeout(_p.bind(this), 20000);}
+            );            
+        }.bind(this))();
     };
 };
